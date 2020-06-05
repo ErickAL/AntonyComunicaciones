@@ -5,13 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="MimeKit" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Entity\" />
-    <Folder Include="Helpers\" />
+    <ProjectReference Include="..\Common\App.Common.csproj" />
   </ItemGroup>
 
 </Project>
