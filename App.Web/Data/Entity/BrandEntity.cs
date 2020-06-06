@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.Web.Data.Entity
 {
-    public class ItemTypeEntity
+    public class BrandEntity
     {
         public int Id { get; set; }
-        [Display(Name = "Nombre")]
+        [Display(Name = "Nombre ")]
         public string Name { get; set; }
         public ICollection<ItemEntity> Items { get; set; }
-        
     }
 }

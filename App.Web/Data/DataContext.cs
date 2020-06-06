@@ -10,11 +10,17 @@ namespace App.Web.Data
 {
     public class DataContext : IdentityDbContext<UserEntity>
     {
+       
+        public DbSet<ItemEntity> Items { get; set; }
+        public DbSet<ItemTypeEntity> ItemTypes { get; set; }
+        public DbSet<BrandEntity> Brands { get; set; }
+        public DbSet<ServiceEntity> Services { get; set; }
+        public DbSet<PurchaseEntity> Purchases { get; set; }
+       
         public DataContext(DbContextOptions<DataContext> options)
-            : base(options)
+           : base(options)
         {
 
         }
-        public DbSet<ItemEntity> Items { get; set; }
     }
 }

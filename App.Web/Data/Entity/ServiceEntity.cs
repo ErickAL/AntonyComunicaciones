@@ -11,5 +11,6 @@ namespace App.Web.Data.Entity
         public string Name { get; set; }
         public string Descripcion { get; set; }
         public double Price { get; set; }
+        public ICollection<PurchaseServiceDetailEntity> Purchases { get; set; }
     }
 }

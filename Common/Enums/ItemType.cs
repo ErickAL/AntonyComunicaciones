@@ -4,10 +4,11 @@ using System.Text;
 
 namespace App.Common.Enums
 {
-    public enum UserGroupStatus
+    public enum ItemType
     {
-        Pending,
-        Accepted,
-        Rejected
+        Accessory,
+        Phone,
+        SmartPhone,
+        Tablet,
     }
 }

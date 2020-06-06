@@ -6,7 +6,8 @@ namespace App.Common.Enums
 {
     public enum UserType
     {
-        Admin,
+        Admin=1,
+        Register,
         User
     }
 }

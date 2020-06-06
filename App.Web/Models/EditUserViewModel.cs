@@ -38,5 +38,6 @@ namespace App.Web.Models
 
         [Display(Name = "Picture")]
         public string PicturePath { get; set; }
+        public string PictureName => $"{Document}{FirstName}{LastName}";
     }
 }
