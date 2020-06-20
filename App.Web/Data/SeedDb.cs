@@ -27,8 +27,8 @@ namespace App.Web.Data
             await CheckUserAsync("1010", "Usuario", "Administrador", "admin@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Admin);
             UserEntity user1 = await CheckUserAsync("3030", "Usuario", "De Registro", "register@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Register);
             UserEntity user2 = await CheckUserAsync("5050", "Camila", "Cifuentes", "camila@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Register);
-            UserEntity user3 = await CheckUserAsync("6060", "Sandra", "Usuga", "sandra@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
-            UserEntity user4 = await CheckUserAsync("7070", "Lisa", "Marin", "luisa@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
+            UserEntity user3 = await CheckUserAsync("6060", "Sandra", "Usuga", "sandra@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Cashier);
+            UserEntity user4 = await CheckUserAsync("7070", "Lisa", "Marin", "luisa@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Cashier);
             
             await CheckItemTypeAsync();
         }
@@ -73,7 +73,7 @@ namespace App.Web.Data
         {
             await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
             await _userHelper.CheckRoleAsync(UserType.Register.ToString());
-            await _userHelper.CheckRoleAsync(UserType.User.ToString());
+            await _userHelper.CheckRoleAsync(UserType.Cashier.ToString());
         }  
         private async Task CheckItemTypeAsync()
         {

@@ -4,10 +4,9 @@ using System.Text;
 
 namespace App.Common.Enums
 {
-    public enum UserType
+    public enum ShoppingItemType
     {
-        Admin=1,
-        Register,
-        Cashier
+        Item,
+        Service
     }
 }

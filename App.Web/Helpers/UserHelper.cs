@@ -77,8 +77,8 @@ namespace App.Web.Helpers
                 PicturePath = path,
                 PhoneNumber = model.PhoneNumber,
                 UserName = model.Username,
-                UserType = model.UserTypeId == 1 ? UserType.Admin : UserType.User
-            };
+                UserType = getUserType(model.UserTypeId)
+        };
 
             IdentityResult result = await _userManager.CreateAsync(userEntity, model.Password);
             if (result != IdentityResult.Success)
@@ -89,6 +89,25 @@ namespace App.Web.Helpers
             UserEntity newUser = await GetUserAsync(model.Username);
             await AddUserToRoleAsync(newUser, userEntity.UserType.ToString());
             return newUser;
+        }
+
+        private UserType getUserType(int userTypeId)
+        {
+            UserType type =new UserType();
+            switch (userTypeId)
+            {
+                case 1:
+                    type= UserType.Admin;
+                    break;
+                case 2:
+                    type= UserType.Register;
+                    break;
+                case 3:
+                    return UserType.Cashier;
+                default:
+                    break;
+            }
+            return type;
         }
 
         public async Task<IdentityResult> AddUserAsync(UserEntity user, string password)

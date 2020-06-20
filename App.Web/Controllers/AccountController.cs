@@ -1,7 +1,10 @@
-﻿using App.Web.Data;
+﻿using App.Common.Enums;
+using App.Common.Models;
+using App.Web.Data;
 using App.Web.Data.Entity;
 using App.Web.Helpers;
 using App.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -236,6 +239,7 @@ namespace App.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles ="Admin")]
         public IActionResult Register()
         {
             AddUserViewModel model = new AddUserViewModel
@@ -253,6 +257,7 @@ namespace App.Web.Controllers
             if (ModelState.IsValid)
             {
                 string path = string.Empty;
+
 
                 if (model.PictureFile != null)
                 {
@@ -287,7 +292,8 @@ namespace App.Web.Controllers
                 ModelState.AddModelError(string.Empty, response.Message);
             }
 
-            model.UserTypes = _combosHelper.GetComboRoles();
+            model.UserTypes =_combosHelper.GetComboRoles();
+         
             return View(model);
         }
 

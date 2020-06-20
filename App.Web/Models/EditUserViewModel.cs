@@ -11,33 +11,34 @@ namespace App.Web.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Document")]
-        [MaxLength(20, ErrorMessage = "The {0} field can not have more than {1} characters.")]
-        [Required(ErrorMessage = "The field {0} is mandatory.")]
+        [Display(Name = "Documento")]
+        [MaxLength(20, ErrorMessage = "El {0} campo no puede tener mas de {1} caracteres.")]
+        [Required(ErrorMessage = "El Campo  {0} es mandatorio.")]
         public string Document { get; set; }
 
-        [Display(Name = "First Name")]
-        [MaxLength(50, ErrorMessage = "The {0} field can not have more than {1} characters.")]
-        [Required(ErrorMessage = "The field {0} is mandatory.")]
+        [Display(Name = "Nombres")]
+        [MaxLength(50, ErrorMessage = "El {0} campo no puede tener mas de {1} caracteres.")]
+        [Required(ErrorMessage = "El Campo  {0} es mandatorio.")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Last Name")]
-        [MaxLength(50, ErrorMessage = "The {0} field can not have more than {1} characters.")]
-        [Required(ErrorMessage = "The field {0} is mandatory.")]
+        [Display(Name ="Apellidos")]
+        [MaxLength(50, ErrorMessage = "El {0} campo no puede tener mas de {1} caracteres.")]
+        [Required(ErrorMessage = "El Campo  {0} es mandatorio.")]
         public string LastName { get; set; }
 
-        [MaxLength(100, ErrorMessage = "The {0} field can not have more than {1} characters.")]
+        [MaxLength(100, ErrorMessage = "El {0} campo no puede tener mas de {1} caracteres.")]
+        [Display(Name = "Direccion")]
         public string Address { get; set; }
 
-        [Display(Name = "Phone Number")]
-        [MaxLength(50, ErrorMessage = "The {0} field can not have more than {1} characters.")]
+        [Display(Name = "Telefono")]
+        [MaxLength(50, ErrorMessage = "El {0} campo no puede tener mas de {1} caracteres.")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Picture")]
+        [Display(Name = "Fotografia")]
         public IFormFile PictureFile { get; set; }
 
         [Display(Name = "Picture")]
         public string PicturePath { get; set; }
-        public string PictureName => $"{Document}{FirstName}{LastName}";
+        public string PictureName => $"{FirstName}{LastName}-{Document}";
     }
 }

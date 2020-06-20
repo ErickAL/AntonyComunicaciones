@@ -10,12 +10,14 @@ namespace App.Web.Models
     {
         [Required]
         [EmailAddress]
+        [Display(Name ="Correo electronico")]
         public string Username { get; set; }
 
         [Required]
         [MinLength(6)]
+        [Display(Name = "Contraseña")]
         public string Password { get; set; }
-
+        [Display(Name = "Recuerda rme?")]
         public bool RememberMe { get; set; }
     }
 }

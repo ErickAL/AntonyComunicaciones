@@ -7,27 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.Web.Data;
 using App.Web.Data.Entity;
-using Microsoft.AspNetCore.Authorization;
 
 namespace App.Web.Controllers
 {
-    [Authorize(Roles ="Admin,Register")]
-    public class ItemsController : Controller
+    public class PurchasesController : Controller
     {
         private readonly DataContext _context;
 
-        public ItemsController(DataContext context)
+        public PurchasesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Items
+        // GET: Purchases
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Items.ToListAsync());
+            return View(await _context.Purchases.ToListAsync());
         }
 
-        // GET: Items/Details/5
+        // GET: Purchases/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +33,39 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            var itemEntity = await _context.Items
+            var purchaseEntity = await _context.Purchases
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (itemEntity == null)
+            if (purchaseEntity == null)
             {
                 return NotFound();
             }
 
-            return View(itemEntity);
+            return View(purchaseEntity);
         }
 
-        // GET: Items/Create
+        // GET: Purchases/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Items/Create
+        // POST: Purchases/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,PhotoUrl,Price,Stock")] ItemEntity itemEntity)
+        public async Task<IActionResult> Create(PurchaseEntity purchaseEntity)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(itemEntity);
+                _context.Add(purchaseEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(itemEntity);
+            return View(purchaseEntity);
         }
 
-        // GET: Items/Edit/5
+        // GET: Purchases/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +73,22 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            var itemEntity = await _context.Items.FindAsync(id);
-            if (itemEntity == null)
+            var purchaseEntity = await _context.Purchases.FindAsync(id);
+            if (purchaseEntity == null)
             {
                 return NotFound();
             }
-            return View(itemEntity);
+            return View(purchaseEntity);
         }
 
-        // POST: Items/Edit/5
+        // POST: Purchases/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,PhotoUrl,Price,Stock")] ItemEntity itemEntity)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Date")] PurchaseEntity purchaseEntity)
         {
-            if (id != itemEntity.Id)
+            if (id != purchaseEntity.Id)
             {
                 return NotFound();
             }
@@ -99,12 +97,12 @@ namespace App.Web.Controllers
             {
                 try
                 {
-                    _context.Update(itemEntity);
+                    _context.Update(purchaseEntity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemEntityExists(itemEntity.Id))
+                    if (!PurchaseEntityExists(purchaseEntity.Id))
                     {
                         return NotFound();
                     }
@@ -115,10 +113,10 @@ namespace App.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(itemEntity);
+            return View(purchaseEntity);
         }
 
-        // GET: Items/Delete/5
+        // GET: Purchases/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +124,30 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            var itemEntity = await _context.Items
+            var purchaseEntity = await _context.Purchases
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (itemEntity == null)
+            if (purchaseEntity == null)
             {
                 return NotFound();
             }
 
-            return View(itemEntity);
+            return View(purchaseEntity);
         }
 
-        // POST: Items/Delete/5
+        // POST: Purchases/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var itemEntity = await _context.Items.FindAsync(id);
-            _context.Items.Remove(itemEntity);
+            var purchaseEntity = await _context.Purchases.FindAsync(id);
+            _context.Purchases.Remove(purchaseEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ItemEntityExists(int id)
+        private bool PurchaseEntityExists(int id)
         {
-            return _context.Items.Any(e => e.Id == id);
+            return _context.Purchases.Any(e => e.Id == id);
         }
     }
 }
