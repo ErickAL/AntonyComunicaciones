@@ -7,33 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.Web.Data;
 using App.Web.Data.Entity;
-using App.Web.Helpers;
 
 namespace App.Web.Controllers
 {
-    public class PurchasesController : Controller
+    public class ServiciosController : Controller
     {
         private readonly DataContext _context;
-        private readonly IUserHelper _userHelper;
 
-        public PurchasesController(DataContext context,
-            IUserHelper userHelper)
+        public ServiciosController(DataContext context)
         {
             _context = context;
-            _userHelper = userHelper;
         }
 
-        // GET: Purchases
+        // GET: Servicios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Purchases
-                .Include(x=>x.User)
-                .Include(x=>x.PurchaseItemDetails)
-                .Include(x=>x.PurchaseServiceDetails)
-                .ToListAsync());
+            return View(await _context.Services.ToListAsync());
         }
 
-        // GET: Purchases/Details/5
+        // GET: Servicios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,46 +33,39 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            var purchaseEntity = await _context.Purchases
+            var serviceEntity = await _context.Services
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (purchaseEntity == null)
+            if (serviceEntity == null)
             {
                 return NotFound();
             }
 
-            return View(purchaseEntity);
+            return View(serviceEntity);
         }
 
-        // GET: Purchases/Create
-        public async Task<IActionResult> Create()
+        // GET: Servicios/Create
+        public IActionResult Create()
         {
-            PurchaseEntity model = new PurchaseEntity();
-            
-           
-            model.Date = DateTime.UtcNow;
-            model.PurchaseItemDetails = new List<PurchaseItemDetailEntity>();
-            model.PurchaseServiceDetails= new List<PurchaseServiceDetailEntity>();
-            return View(model);
+            return View();
         }
 
-        // POST: Purchases/Create
+        // POST: Servicios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PurchaseEntity purchaseEntity)
+        public async Task<IActionResult> Create([Bind("Id,Name,Descripcion,Price")] ServiceEntity serviceEntity)
         {
             if (ModelState.IsValid)
             {
-                purchaseEntity.User = await _userHelper.GetUserAsync(this.User.Identity.Name);
-                _context.Add(purchaseEntity);
+                _context.Add(serviceEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(purchaseEntity);
+            return View(serviceEntity);
         }
 
-        // GET: Purchases/Edit/5
+        // GET: Servicios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,22 +73,22 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            var purchaseEntity = await _context.Purchases.FindAsync(id);
-            if (purchaseEntity == null)
+            var serviceEntity = await _context.Services.FindAsync(id);
+            if (serviceEntity == null)
             {
                 return NotFound();
             }
-            return View(purchaseEntity);
+            return View(serviceEntity);
         }
 
-        // POST: Purchases/Edit/5
+        // POST: Servicios/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date")] PurchaseEntity purchaseEntity)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Descripcion,Price")] ServiceEntity serviceEntity)
         {
-            if (id != purchaseEntity.Id)
+            if (id != serviceEntity.Id)
             {
                 return NotFound();
             }
@@ -112,12 +97,12 @@ namespace App.Web.Controllers
             {
                 try
                 {
-                    _context.Update(purchaseEntity);
+                    _context.Update(serviceEntity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PurchaseEntityExists(purchaseEntity.Id))
+                    if (!ServiceEntityExists(serviceEntity.Id))
                     {
                         return NotFound();
                     }
@@ -128,10 +113,10 @@ namespace App.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(purchaseEntity);
+            return View(serviceEntity);
         }
 
-        // GET: Purchases/Delete/5
+        // GET: Servicios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,30 +124,30 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            var purchaseEntity = await _context.Purchases
+            var serviceEntity = await _context.Services
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (purchaseEntity == null)
+            if (serviceEntity == null)
             {
                 return NotFound();
             }
 
-            return View(purchaseEntity);
+            return View(serviceEntity);
         }
 
-        // POST: Purchases/Delete/5
+        // POST: Servicios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var purchaseEntity = await _context.Purchases.FindAsync(id);
-            _context.Purchases.Remove(purchaseEntity);
+            var serviceEntity = await _context.Services.FindAsync(id);
+            _context.Services.Remove(serviceEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PurchaseEntityExists(int id)
+        private bool ServiceEntityExists(int id)
         {
-            return _context.Purchases.Any(e => e.Id == id);
+            return _context.Services.Any(e => e.Id == id);
         }
     }
 }

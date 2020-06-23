@@ -252,6 +252,7 @@ namespace App.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(AddUserViewModel model)
         {
             if (ModelState.IsValid)
@@ -267,7 +268,7 @@ namespace App.Web.Controllers
                 UserEntity user = await _userHelper.AddUserAsync(model, path);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "This email is already used.");
+                    ModelState.AddModelError(string.Empty, "Este email ya esta en uso.");
                     model.UserTypes = _combosHelper.GetComboRoles();
                     return View(model);
                 }
@@ -285,7 +286,7 @@ namespace App.Web.Controllers
                     $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
                 if (response.IsSuccess)
                 {
-                    ViewBag.Message = "The instructions to allow your user has been sent to email.";
+                    ViewBag.Message = "Las instruccuines para permitir tu usuario han sido envida a tu correo" ;
                     return View(model);
                 }
 

@@ -30,7 +30,7 @@ namespace App.Web.Data
             UserEntity user3 = await CheckUserAsync("6060", "Sandra", "Usuga", "sandra@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Cashier);
             UserEntity user4 = await CheckUserAsync("7070", "Lisa", "Marin", "luisa@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Cashier);
             
-            await CheckItemTypeAsync();
+            await CheckItemTypeAndBrandsAsync();
         }
 
      
@@ -75,14 +75,37 @@ namespace App.Web.Data
             await _userHelper.CheckRoleAsync(UserType.Register.ToString());
             await _userHelper.CheckRoleAsync(UserType.Cashier.ToString());
         }  
-        private async Task CheckItemTypeAsync()
+        private async Task CheckItemTypeAndBrandsAsync()
         {
             List<ItemTypeEntity> types = new List<ItemTypeEntity> {
-                new ItemTypeEntity { Name = "Accesory" },
+                new ItemTypeEntity { Name = "Accesorio" },
                 new ItemTypeEntity { Name = "Smartphone" },
                 new ItemTypeEntity { Name = "Table" }
                 };
-           _dataContext.ItemTypes.AddRange(types);
+            List<BrandEntity> brands = new List<BrandEntity> {
+                new BrandEntity { Name = "Apple" },
+                new BrandEntity { Name = "LG" },
+                new BrandEntity { Name = "Samsung" },
+                new BrandEntity { Name = "Alcatel" },
+                };
+            foreach (var item in brands)
+            {
+                var exist = _dataContext.Brands.FirstOrDefault(i => i.Name == item.Name);
+                if (exist == null)
+                {
+                    _dataContext.Add(item);
+                }
+            }
+            foreach (var item in types)
+            {
+               var exist= _dataContext.ItemTypes.FirstOrDefault(i=>i.Name==item.Name);
+                if(exist==null)
+                {
+                    _dataContext.Add(item);
+                }
+            }
+            
+           
             await _dataContext.SaveChangesAsync();
         }
     }

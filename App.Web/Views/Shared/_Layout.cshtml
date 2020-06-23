@@ -30,38 +30,53 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registrar <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Register")))
-                            {
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Register")))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registrar <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+
+                                <li><a asp-area="" asp-controller="Servicios" asp-action="Index">Servicios</a></li>
+                                <li role="separator" class="divider"></li>
                                 <li><a asp-area="" asp-controller="Items" asp-action="Index">Articulos</a></li>
-                            }
-                            <li role="separator" class="divider"></li>
-                            <li><a asp-area="" asp-controller="Brands" asp-action="Index">Marcas</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Servicio</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Mas</a></li>
-                        </ul>
-                    </li>
+                                <li role="separator" class="divider"></li>
+                                <li><a asp-area="" asp-controller="TipoArticulos" asp-action="Index">Tipo de articulos</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a asp-area="" asp-controller="Brands" asp-action="Index">Marcas</a></li>
+
+                            </ul>
+
+                        </li>
+                    }
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Cashier")))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cajero <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Purchases" asp-action="Index">Facturacion</a></li>
+                               
+
+                            </ul>
+
+                        </li>
+                    }
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Acerca de nosotros</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>
 
-                    
+
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Cerrar session</a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Iniciar session</a></li>
-                    }
-                </ul>
-            </div>
+                            <ul class="nav navbar-nav navbar-right">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a></li>
+                                    <li><a asp-area="" asp-controller="Account" asp-action="Logout">Cerrar session</a></li>
+                                }
+                                else
+                                {
+                                    <li><a asp-area="" asp-controller="Account" asp-action="Login">Iniciar session</a></li>
+                                }
+                            </ul>
+</div>
         </div>
     </nav>
 

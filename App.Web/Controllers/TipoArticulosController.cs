@@ -7,33 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.Web.Data;
 using App.Web.Data.Entity;
-using App.Web.Helpers;
 
 namespace App.Web.Controllers
 {
-    public class PurchasesController : Controller
+    public class TipoArticulosController : Controller
     {
         private readonly DataContext _context;
-        private readonly IUserHelper _userHelper;
 
-        public PurchasesController(DataContext context,
-            IUserHelper userHelper)
+        public TipoArticulosController(DataContext context)
         {
             _context = context;
-            _userHelper = userHelper;
         }
 
-        // GET: Purchases
+        // GET: TipoArticulos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Purchases
-                .Include(x=>x.User)
-                .Include(x=>x.PurchaseItemDetails)
-                .Include(x=>x.PurchaseServiceDetails)
-                .ToListAsync());
+            return View(await _context.ItemTypes.ToListAsync());
         }
 
-        // GET: Purchases/Details/5
+        // GET: TipoArticulos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,46 +33,39 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            var purchaseEntity = await _context.Purchases
+            var itemTypeEntity = await _context.ItemTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (purchaseEntity == null)
+            if (itemTypeEntity == null)
             {
                 return NotFound();
             }
 
-            return View(purchaseEntity);
+            return View(itemTypeEntity);
         }
 
-        // GET: Purchases/Create
-        public async Task<IActionResult> Create()
+        // GET: TipoArticulos/Create
+        public IActionResult Create()
         {
-            PurchaseEntity model = new PurchaseEntity();
-            
-           
-            model.Date = DateTime.UtcNow;
-            model.PurchaseItemDetails = new List<PurchaseItemDetailEntity>();
-            model.PurchaseServiceDetails= new List<PurchaseServiceDetailEntity>();
-            return View(model);
+            return View();
         }
 
-        // POST: Purchases/Create
+        // POST: TipoArticulos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PurchaseEntity purchaseEntity)
+        public async Task<IActionResult> Create([Bind("Id,Name")] ItemTypeEntity itemTypeEntity)
         {
             if (ModelState.IsValid)
             {
-                purchaseEntity.User = await _userHelper.GetUserAsync(this.User.Identity.Name);
-                _context.Add(purchaseEntity);
+                _context.Add(itemTypeEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(purchaseEntity);
+            return View(itemTypeEntity);
         }
 
-        // GET: Purchases/Edit/5
+        // GET: TipoArticulos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,22 +73,22 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            var purchaseEntity = await _context.Purchases.FindAsync(id);
-            if (purchaseEntity == null)
+            var itemTypeEntity = await _context.ItemTypes.FindAsync(id);
+            if (itemTypeEntity == null)
             {
                 return NotFound();
             }
-            return View(purchaseEntity);
+            return View(itemTypeEntity);
         }
 
-        // POST: Purchases/Edit/5
+        // POST: TipoArticulos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date")] PurchaseEntity purchaseEntity)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ItemTypeEntity itemTypeEntity)
         {
-            if (id != purchaseEntity.Id)
+            if (id != itemTypeEntity.Id)
             {
                 return NotFound();
             }
@@ -112,12 +97,12 @@ namespace App.Web.Controllers
             {
                 try
                 {
-                    _context.Update(purchaseEntity);
+                    _context.Update(itemTypeEntity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PurchaseEntityExists(purchaseEntity.Id))
+                    if (!ItemTypeEntityExists(itemTypeEntity.Id))
                     {
                         return NotFound();
                     }
@@ -128,10 +113,10 @@ namespace App.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(purchaseEntity);
+            return View(itemTypeEntity);
         }
 
-        // GET: Purchases/Delete/5
+        // GET: TipoArticulos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,30 +124,30 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            var purchaseEntity = await _context.Purchases
+            var itemTypeEntity = await _context.ItemTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (purchaseEntity == null)
+            if (itemTypeEntity == null)
             {
                 return NotFound();
             }
 
-            return View(purchaseEntity);
+            return View(itemTypeEntity);
         }
 
-        // POST: Purchases/Delete/5
+        // POST: TipoArticulos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var purchaseEntity = await _context.Purchases.FindAsync(id);
-            _context.Purchases.Remove(purchaseEntity);
+            var itemTypeEntity = await _context.ItemTypes.FindAsync(id);
+            _context.ItemTypes.Remove(itemTypeEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PurchaseEntityExists(int id)
+        private bool ItemTypeEntityExists(int id)
         {
-            return _context.Purchases.Any(e => e.Id == id);
+            return _context.ItemTypes.Any(e => e.Id == id);
         }
     }
 }

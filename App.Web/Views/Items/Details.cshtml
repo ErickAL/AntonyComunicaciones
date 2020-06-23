@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
-    <h4>ItemEntity</h4>
+    <h4>Articulo</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,13 +20,16 @@
             @Html.DisplayNameFor(model => model.PhotoUrl)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.PhotoUrl)
+            @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+            {
+                <img src="@Url.Content(Model.PhotoUrl)" alt="Image" style="width:300px;height:300px;max-width: 100%; height: auto;" />
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            DOP $ @Html.DisplayFor(model => model.Price)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Stock)
@@ -37,6 +40,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+    <a asp-action="Index" class=" btn btn-info">Volver atras</a>
 </div>

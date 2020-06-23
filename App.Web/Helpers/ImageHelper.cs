@@ -45,5 +45,7 @@ namespace App.Web.Helpers
 
             return $"~/images/{folder}/{file}";
         }
+
+       
     }
 }

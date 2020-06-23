@@ -9,5 +9,7 @@ namespace App.Web.Helpers
     public interface ICombosHelper
     {
         IEnumerable<SelectListItem> GetComboRoles();
+        IEnumerable<SelectListItem> GetComboItemType();
+        IEnumerable<SelectListItem> GetComboBrands();
     }
 }

@@ -1,10 +1,10 @@
 ﻿@model App.Web.Models.AddItemViewModel
 
-<h4>Editar  articulo</h4>
+<h4>Registrara un nuevo articulo</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
+        <form asp-action="Register" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input asp-for="Id" type="hidden" />
@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PictureFile" class="control-label"></label>
-                <input asp-for="PictureFile" class="form-control" type="file" />
+                <input asp-for="PictureFile" placeholder="Seleccionar Imagen" class="form-control" type="file" />
                 <span asp-validation-for="PictureFile" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -51,7 +51,7 @@
                 <span asp-validation-for="Inventario" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Actualizar" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-info">Volver atras</a>
             </div>
         </form>
@@ -59,8 +59,7 @@
 </div>
 
 
-   
-
+    
 
 
 @section Scripts {
