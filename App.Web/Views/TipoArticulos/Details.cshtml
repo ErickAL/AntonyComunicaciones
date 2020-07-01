@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
-    <h4>ItemTypeEntity</h4>
+    <h4>Articulo</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,6 +20,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+    <a asp-action="Index" class="btn btn-info"> <i class="glyphicon glyphicon-chevron-left"></i>Volver atras</a>
 </div>

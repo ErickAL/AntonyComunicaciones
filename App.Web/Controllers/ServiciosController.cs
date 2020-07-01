@@ -24,6 +24,11 @@ namespace App.Web.Controllers
         {
             return View(await _context.Services.ToListAsync());
         }
+        [HttpGet(Name = "GetServicios")]
+        public async Task<IActionResult> GetServicios()
+        {
+            return Ok(await _context.Services.ToListAsync());
+        }
 
         // GET: Servicios/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -1,0 +1,107 @@
+﻿@model App.Web.Data.Entity.ServiceEntity
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buscarServicioModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="buscarServicioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Buscar Servicios</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="dtServicios" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Precio</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        <!-- -->
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        let servicios = [{}]
+        let facturaServicios = [{}];
+        const getServicios = () => {
+
+            $.ajax({
+                    url: "@Url.Action("GetServicios", "Servicios")", // Url
+                    data: {
+                    },
+                    type: "get"  // Verbo HTTP
+                })
+                // Se ejecuta si todo fue bien.
+                .done(function (result) {
+                    if (result != null) {
+                        servicios = result;
+                    }
+                    else {
+                    }
+                })
+                // Se ejecuta si se produjo un error.
+                .fail(function (xhr, status, error) {
+                    console.log(xhr, status, error);
+                })
+                // Hacer algo siempre, haya sido exitosa o no.
+                .always(function () {
+
+                });
+        };
+        const addService=(service)=>
+        {
+            let isInFactura = isInFacturaService(service);
+            if (isInFactura) {
+
+            }
+            
+        }
+        const isInFacturaService = (service) => {
+            facturaServicios.forEach(item => {
+                if (item.service.id === service.id) {
+                    return true;
+                }
+                    
+            }
+
+            )
+            return false;
+        }
+        
+        $(document).ready(() => {
+            getServicios();
+            $('#dtServicios').DataTable();
+        });
+    </script>
+}

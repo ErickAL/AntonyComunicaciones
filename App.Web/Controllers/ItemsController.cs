@@ -5,6 +5,7 @@ using App.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +31,11 @@ namespace App.Web.Controllers
             _userHelper = userHelper;
         }
 
+        [HttpGet(Name = "GetArticulosDisponible")]
+        public IEnumerable<ItemEntity> GetArticulosDisponible()
+        {
+            return _context.Items.Where(x=>x.Stock>0);
+        }
         // GET: Items
         public async Task<IActionResult> Index()
         {

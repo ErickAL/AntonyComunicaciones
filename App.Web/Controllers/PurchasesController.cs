@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using App.Web.Data;
 using App.Web.Data.Entity;
 using App.Web.Helpers;
+using App.Web.Models;
 
 namespace App.Web.Controllers
 {
@@ -50,17 +51,27 @@ namespace App.Web.Controllers
 
             return View(purchaseEntity);
         }
-
-        // GET: Purchases/Create
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Facturar()
         {
             PurchaseEntity model = new PurchaseEntity();
-            
-           
-            model.Date = DateTime.UtcNow;
+            model.Date = DateTime.Now;
+            model.PurchaseItemDetails = new List<PurchaseItemDetailEntity>();
+            model.PurchaseServiceDetails = new List<PurchaseServiceDetailEntity>();
+            FacturaViewModel viewmodel = new FacturaViewModel();
+            viewmodel.Factura = model;
+            viewmodel.Articulo = await _context.Items.Where(x => x.Stock > 0).ToListAsync();
+            viewmodel.Servicios = await _context.Services.ToListAsync();
+
+            return View(viewmodel);
+        }
+        // GET: Purchases/Create
+        public async  Task<IActionResult> Create()
+        {
+            PurchaseEntity model = new PurchaseEntity();
+            model.Date = DateTime.Now;
             model.PurchaseItemDetails = new List<PurchaseItemDetailEntity>();
             model.PurchaseServiceDetails= new List<PurchaseServiceDetailEntity>();
-            return View(model);
+            return  View(model);
         }
 
         // POST: Purchases/Create
